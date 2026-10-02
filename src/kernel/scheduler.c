@@ -136,7 +136,7 @@ int scheduler_step(void) {
 }
 
 void scheduler_print_stats(void) {
-    vga_write("\nTotal Runtime: \n", MAKE_COLOR(COLOR_BLACK, COLOR_CYAN));
+    vga_write("\ntotal runtime: \n", MAKE_COLOR(COLOR_BLACK, COLOR_CYAN));
     vga_print_int(sched.total_time_ms, MAKE_COLOR(COLOR_BLACK, COLOR_CYAN));
     vga_write("ms\n", MAKE_COLOR(COLOR_BLACK, COLOR_CYAN));
 }

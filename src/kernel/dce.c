@@ -49,13 +49,11 @@ void dce_vm_load_cde(DCE_VM* vm, const uint8_t* program, uint32_t size)
     vm->code_end = header->code_size;
     vm->data_start = header->code_size;
 
-    /* CODE laden */
     for (uint32_t i = 0; i < header->code_size; i++) {
         vm->code[i] =
             program[header->code_offset + i];
     }
 
-    /* DATA / Strings direkt dahinter laden */
     for (uint32_t i = 0; i < header->data_size; i++) {
         vm->code[header->code_size + i] =
             program[header->data_offset + i];

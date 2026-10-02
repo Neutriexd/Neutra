@@ -7,7 +7,15 @@
 #define VGA_MEMORY ((volatile unsigned short*)0xb8000)
 #define VGA_WIDTH 80
 #define VGA_HEIGHT 25
-
+#ifndef VGA_EV_CELL
+#define VGA_EV_CELL   0   
+#endif
+#ifndef VGA_EV_SCROLL
+#define VGA_EV_SCROLL 1   
+#endif
+#ifndef VGA_EV_CLEAR
+#define VGA_EV_CLEAR  2   
+#endif
 #define MAKE_COLOR(bg, fg) ((bg << 4) | fg)
 
 #define COLOR_BLACK 0
@@ -33,7 +41,9 @@ void vga_putchar(char c, unsigned char color);
 void vga_write(const char* str, unsigned char color);
 void vga_print_hex(unsigned int num, unsigned char color);
 void vga_print_int(int num, unsigned char color);
+void vga_draw_text_at(int x, int y, const char* text, uint32_t color);
 void vga_backspace(void);
+void vga_mouse_update(int delta_x, int delta_y, uint8_t buttons);
 
 void int_to_str(int num, char* buf, int buf_size);
 void hex_to_str(unsigned int num, char* buf, int buf_size);

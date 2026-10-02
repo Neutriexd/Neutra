@@ -4,7 +4,7 @@
 
 #define MAX_DCE_VARS 256
 #define MAX_DCE_CODE 4096
-#define CDE_MAGIC 0x43444501  // "CDE\x01"
+#define CDE_MAGIC 0x43444501
 #define CDE_VERSION 1
 
 typedef struct {

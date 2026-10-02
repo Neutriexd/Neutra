@@ -1,33 +1,63 @@
+
 #include <stdint.h>
 #include <stddef.h>
 
 #include "kernel.h"
 #include "vga.h"
 
+#ifndef VGA_EV_CELL
+#define VGA_EV_CELL   0   
+#endif
+#ifndef VGA_EV_SCROLL
+#define VGA_EV_SCROLL 1   
+#endif
+#ifndef VGA_EV_CLEAR
+#define VGA_EV_CLEAR  2   
+#endif
+typedef void (*vga_listener_t)(int event, int x, int y);
+void vga_set_listener(vga_listener_t listener);
+uint16_t vga_get_cell(int x, int y);
+
 static volatile int vga_x = 0;
 static volatile int vga_y = 0;
+static uint16_t text_cells[VGA_WIDTH * VGA_HEIGHT];
+static vga_listener_t vga_listener;
 
-#define MAKE_COLOR(bg, fg) (((bg) << 4) | (fg))
+static void notify(int event, int x, int y) {
+    if (vga_listener) vga_listener(event, x, y);
+}
+
+void vga_set_listener(vga_listener_t listener) {
+    vga_listener = listener;
+}
+
+uint16_t vga_get_cell(int x, int y) {
+    if (x < 0 || x >= VGA_WIDTH || y < 0 || y >= VGA_HEIGHT) return 0;
+    return text_cells[y * VGA_WIDTH + x];
+}
 
 void vga_clear(void) {
     for (int i = 0; i < VGA_WIDTH * VGA_HEIGHT; i++) {
         VGA_MEMORY[i] = 0x0000;
+        text_cells[i] = 0x0000;
     }
     vga_x = 0;
     vga_y = 0;
+    notify(VGA_EV_CLEAR, 0, 0);
 }
 
 void vga_scroll(void) {
-    
     for (int i = 0; i < VGA_WIDTH * (VGA_HEIGHT - 1); i++) {
-        VGA_MEMORY[i] = VGA_MEMORY[i + VGA_WIDTH];
+        text_cells[i] = text_cells[i + VGA_WIDTH];
+        VGA_MEMORY[i] = text_cells[i];
     }
-    
     for (int i = VGA_WIDTH * (VGA_HEIGHT - 1); i < VGA_WIDTH * VGA_HEIGHT; i++) {
         VGA_MEMORY[i] = 0x0000;
+        text_cells[i] = 0x0000;
     }
     vga_y = VGA_HEIGHT - 1;
     vga_x = 0;
+    notify(VGA_EV_SCROLL, 0, 0);
 }
 
 void vga_putchar(char c, unsigned char color) {
@@ -36,9 +66,11 @@ void vga_putchar(char c, unsigned char color) {
         vga_y++;
     } else {
         int index = vga_y * VGA_WIDTH + vga_x;
-        
+
         if (index < VGA_WIDTH * VGA_HEIGHT) {
-            VGA_MEMORY[index] = ((uint16_t)color << 8) | (unsigned char)c;
+            text_cells[index] = ((uint16_t)color << 8) | (unsigned char)c;
+            VGA_MEMORY[index] = text_cells[index];
+            notify(VGA_EV_CELL, vga_x, vga_y);
             vga_x++;
         }
     }

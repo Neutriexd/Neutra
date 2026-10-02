@@ -1,4 +1,4 @@
-/* Linker script für 32-bit x86 Multiboot2 OS */
+
 
 ENTRY(start)
 

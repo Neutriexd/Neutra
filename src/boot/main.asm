@@ -6,7 +6,7 @@ bits 32
 
 start:
     mov esp, stack_top
-    push ebx        ; Multiboot Info pointer als Parameter
+    push ebx        
     call kernel_entry
     hlt
     jmp start

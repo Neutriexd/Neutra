@@ -14,6 +14,7 @@ int strcmp(const char* str1, const char* str2);
 
 void execute_cde_task(void);
 void run_program(void);
+void test_framebuffer(void);
 void kernel_entry(uint32_t mbt_addr);
 
 #endif
