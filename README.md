@@ -1,6 +1,6 @@
 # Neutra OS
 
-A minimal 32-bit x86 operating system with GRUB bootloader.
+A minimal 32-bit x86 operating system with GRUB bootloader. (soon maybe 64 bit)
 
 ## Quick Start
 
@@ -9,6 +9,12 @@ A minimal 32-bit x86 operating system with GRUB bootloader.
 ```bash
 make clean
 make run-iso
+```
+or with windows qemu
+
+```bash
+make clean
+make run-win
 ```
 
 ## Creating Custom DCE Programs
@@ -58,14 +64,19 @@ The DCE syntax is similar to assembly but with a lighter, more declarative appro
    ```bash
    execute
    ```
+## There is a new file explorer to create files and folders
+you can add folders or files and navigate with W A S D
 
-## File Structure
+and close the Explorer with the mouse ( ps2 mouse)
+and id recommand if you close it to drag the Terminal over the File Explorer 
+in case of pixels that dident cleared
 
-- `program.dce` - Source code (DCE format)
-- `program.cde` - Compiled binary (Compiled DCE)
-- `program.h` - C header file (hex dump via xxd)
-- `src/kernel/kernel_memory/` - Kernel memory location for program files
+## Keyboard layout
+the layout is QWERTZ 
+and will be changed soon to support both QWERTZ and QWERTY
 
-## Example Pic in shell
-![Example Pic](Pic/Example_shell.png)
+## Example Pic in shell ( old )
+![Example Pic old](Pic/Example_shell.png)
+## New Example ver 0.8
+![Example Pic](Pic/Example_os.png)
 
