@@ -75,8 +75,8 @@ in case of pixels that dident cleared
 the layout is QWERTZ 
 and will be changed soon to support both QWERTZ and QWERTY
 
-## Example ver 0.4 
+## Neutra Ver 0.4 
 ![Example Pic](Pic/Example_shell.png)
-## Example ver 0.8
+## Neutra Ver 0.8
 ![Example Pic](Pic/Example_os.png)
 
