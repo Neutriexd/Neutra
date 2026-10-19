@@ -87,6 +87,6 @@ void vga_mouse_update(int delta_x, int delta_y, uint8_t buttons) {
     if (mouse_x >= (int)fb_info.framebuffer_width) mouse_x = (int)fb_info.framebuffer_width - 1;
     if (mouse_y >= (int)fb_info.framebuffer_height) mouse_y = (int)fb_info.framebuffer_height - 1;
 
-    shell_window_mouse(mouse_x, mouse_y, buttons);   /* kann neu zeichnen und präsentieren */
+    shell_window_mouse(mouse_x, mouse_y, buttons); 
     draw_cursor();
 }
